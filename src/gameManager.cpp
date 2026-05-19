@@ -55,7 +55,7 @@ void GameManager::draw()
 
 int GameManager::init()
 {
-    Entity player("ENtity", 100, 100, 50, 50, nullptr, PURPLE);
+    Entity player("Pelaaja", 100, 100, 50, 50, nullptr, PURPLE);
 
     player.isPlayer = true;
 
