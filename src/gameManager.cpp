@@ -49,24 +49,13 @@ void GameManager::draw()
 {
     for (auto& e : entities)
     {
-        Vector2 pos = e.getPos();
-        Vector2 size = e.getSize();
-
-        DrawRectangle(
-            (int)pos.x,
-            (int)pos.y,
-            (int)size.x,
-            (int)size.y,
-            RED
-        );
-
-        e.getNametag().draw(pos.x, pos.y, size.x, size.y);
+       e.draw(); 
     }
 }
 
 int GameManager::init()
 {
-    Entity player("Pelaaja", nullptr, 100, 100, 50, 50, RED);
+    Entity player("ENtity", 100, 100, 50, 50, nullptr, PURPLE);
 
     player.isPlayer = true;
 

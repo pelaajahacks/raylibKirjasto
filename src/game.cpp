@@ -45,6 +45,6 @@ void Game::run()
 
 void Game::spawnEntity(std::string name, Texture2D* tex, float x, float y, float w, float h, Color color)
 {
-    entities.emplace_back(name, tex, x, y, w, h, color);
+    entities.emplace_back(name, x, y, w, h, tex, color);
 }
 

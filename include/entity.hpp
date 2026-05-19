@@ -8,7 +8,7 @@
 
 class Entity {
   public:
-    Entity(std::string name, Texture2D* tex, float x, float y, float w, float h, Color color);
+    Entity(std::string name, float x, float y, float w, float h, Texture2D* tex = nullptr, Color color = RED);
 
     bool isPlayer = false;
     float speed = 400.0f;

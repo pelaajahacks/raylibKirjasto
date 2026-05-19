@@ -2,7 +2,7 @@
 #include "nametag.hpp"
 #include <algorithm>
 
-Entity::Entity(std::string name, Texture2D* tex, float x, float y, float w, float h, Color color)
+Entity::Entity(std::string name, float x, float y, float w, float h, Texture2D* tex, Color color)
     : name(name),
       texture(tex),
       rect{x, y, w, h},
@@ -69,6 +69,7 @@ int Entity::draw()
   else {
     DrawRectangleRec(rect, color);
   }
+  nametag.draw(rect.x, rect.y, rect.width, rect.height);
 
   
   return 1;
