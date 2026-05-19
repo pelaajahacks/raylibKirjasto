@@ -71,7 +71,7 @@ int GameManager::init()
     player.isPlayer = true;
 
     entities.push_back(player);
-    return 0;
+    return 1;
 }
 void GameManager::drawFPS() {
     DrawText(TextFormat("FPS: %d", GetFPS()), 10, 10, 20, PURPLE);

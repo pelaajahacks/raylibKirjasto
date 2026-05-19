@@ -42,7 +42,7 @@ int Entity::setPos(float nx, float ny)
 int Entity::destroy()
 {
     alive = false;
-    return 0;
+    return 1;
 }
 
 bool Entity::isAlive() const
@@ -58,7 +58,7 @@ Color Entity::getColor() const
 int Entity::setColor(Color c)
 {
     color = c;
-    return 0;
+    return 1;
 }
 
 int Entity::draw()
@@ -71,7 +71,7 @@ int Entity::draw()
   }
 
   
-  return 0;
+  return 1;
 }
 
 Nametag& Entity::getNametag()

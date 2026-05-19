@@ -9,13 +9,13 @@ int Nametag::setColor(Color fgColor, Color bgColor)
 {
     fg = fgColor;
     bg = bgColor;
-    return 0;
+    return 1;
 }
 
 int Nametag::setText(std::string newText)
 {
     text = newText;
-    return 0;
+    return 1;
 }
 
 void Nametag::draw(float x, float y, float entityWidth, float entityHeight) const

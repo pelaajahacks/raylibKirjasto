@@ -8,6 +8,8 @@
 
 class Entity {
   public:
+    Entity(std::string name, Texture2D* tex, float x, float y, float w, float h, Color color);
+
     bool isPlayer = false;
     float speed = 400.0f;
 
@@ -27,7 +29,6 @@ class Entity {
     int draw();
     Nametag& getNametag();
 
-    Entity(std::string name, Texture2D* tex, float x, float y, float w, float h, Color color);
 
 
   private:
