@@ -1,24 +1,29 @@
 #pragma once
 
+#include "text.hpp"
+
 #include <raylib.h>
 #include <string>
 
-class Nametag {
+class Nametag: public Text {
   public:
     Nametag(std::string text);
-    int setColor(Color fg, Color bg);
-    int setText(std::string text);
 
+    void setColor(Color fg, Color bg);
+    
     void draw(float x, float y, float entityHeight, float entityWidth) const;
 
     static constexpr float YPADDING = 8.0f;
+    static constexpr int fontSize = 20;
+    static constexpr float padding = 4.0f;
     
 
   private:
     Rectangle rect;
-    std::string text = "nametag";
-    Color bg = GRAY;
-    Color fg = RAYWHITE;
+
+  protected:
+      Color bg = GRAY;
+      Color fg = RAYWHITE;
 
 
 };

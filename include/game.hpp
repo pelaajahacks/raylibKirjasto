@@ -6,18 +6,21 @@
 
 class Game {
 public:
-    Game(std::string windowName, float w, float h);
+    Game(std::string windowName, float w, float h, Color bgColor = RAYWHITE);
     ~Game();
 
     void run();
-    void spawnEntity(std::string name, Texture2D* tex, float x, float y, float w, float h, Color color);
+    void reset();
 
+
+    
 
 
 private:
     float w, h;
     std::string windowName;
     Texture2D* bg;
+    Color bgColor;
 
-    std::vector<Entity> entities;
+
 };

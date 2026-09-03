@@ -1,34 +1,22 @@
 #include "nametag.hpp"
 
 Nametag::Nametag(std::string text)
-    : text(text)
+    : Text(text)
 {
 }
 
-int Nametag::setColor(Color fgColor, Color bgColor)
+void Nametag::setColor(Color fgColor, Color bgColor)
 {
     fg = fgColor;
     bg = bgColor;
-    return 1;
 }
 
-int Nametag::setText(std::string newText)
-{
-    text = newText;
-    return 1;
-}
+void Nametag::draw(float x, float y, float entityWidth, float entityHeight) const {
 
-void Nametag::draw(float x, float y, float entityWidth, float entityHeight) const
-{
-    int fontSize = 20;
+    float textWidth = MeasureText(getText().c_str(), fontSize);
+    float drawX = x - (textWidth * 0.5f);
 
-    float textWidth = MeasureText(text.c_str(), fontSize);
-
-    float padding = 4.0f;
-
-    float drawX = x + (entityWidth * 0.5f) - (textWidth * 0.5f);
-
-    float topY = y - (entityHeight * 0.5f);
+    float topY = y - (entityHeight * 1.0f);
     float drawY = topY - YPADDING;
 
     Rectangle bgRect = {
@@ -39,5 +27,5 @@ void Nametag::draw(float x, float y, float entityWidth, float entityHeight) cons
     };
 
     DrawRectangleRec(bgRect, bg);
-    DrawText(text.c_str(), (int)drawX, (int)drawY, fontSize, fg);
+    DrawText(getText().c_str(), (int)drawX, (int)drawY, fontSize, fg);
 }

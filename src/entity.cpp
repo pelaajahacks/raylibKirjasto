@@ -30,13 +30,21 @@ int Entity::setPos(float nx, float ny)
     float screenH = GetScreenHeight();
 
     // clamp TOP-LEFT position
-    nx = std::clamp(nx, 0.0f, screenW - rect.width);
-    ny = std::clamp(ny, 0.0f, screenH - rect.height);
+    //nx = std::clamp(nx, 0.0f, screenW - rect.width);
+    //ny = std::clamp(ny, 0.0f, screenH - rect.height);
 
     rect.x = nx;
     rect.y = ny;
 
     return 1;
+}
+
+float Entity::getRotation() const {
+  return rotation;
+}
+
+void Entity::setRotation(float rot) {
+  rotation = rot;
 }
 
 int Entity::destroy()
@@ -67,7 +75,7 @@ int Entity::draw()
     DrawTextureRec(*texture, rect, Vector2{rect.x, rect.y}, WHITE);
   }
   else {
-    DrawRectangleRec(rect, color);
+    DrawRectanglePro(rect, Vector2{rect.width*0.5f, rect.height*0.5f}, rotation, color);
   }
   nametag.draw(rect.x, rect.y, rect.width, rect.height);
 
@@ -78,4 +86,26 @@ int Entity::draw()
 Nametag& Entity::getNametag()
 {
     return nametag;
+}
+
+void Entity::input(float dt)
+{
+    Vector2 pos = getPos();
+
+    if (IsKeyDown(KEY_D)) pos.x += speed * dt;
+    if (IsKeyDown(KEY_A)) pos.x -= speed * dt;
+    if (IsKeyDown(KEY_S)) pos.y += speed * dt;
+    if (IsKeyDown(KEY_W)) pos.y -= speed * dt;
+
+    setPos(pos.x, pos.y);
+}
+
+void Entity::update(float dt) {
+
+}
+
+bool Entity::checkWindowCollisions(int w, int h) {
+  if(rect.x < 0 || rect.y < 0) { return true; }
+  if(rect.x > w || rect.y > h) { return true; }
+  return false;
 }

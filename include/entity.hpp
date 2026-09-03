@@ -26,8 +26,17 @@ class Entity {
     Color getColor() const;
     int setColor(Color color);
 
-    int draw();
+    float getRotation() const;
+    void setRotation(float rot);
+
+    virtual int draw();
     Nametag& getNametag();
+    virtual void input(float dt);
+    virtual void update(float dt);
+    bool checkWindowCollisions(int w, int h);
+
+    virtual void onResize(int w, int h) {}
+
 
 
 
@@ -37,6 +46,7 @@ class Entity {
     std::string name = "entity";
     Texture2D* texture;
     Color color;
+    float rotation = 0.0f;
 
     Nametag nametag;
 };
