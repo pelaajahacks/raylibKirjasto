@@ -10,6 +10,9 @@ class Rocket : public Entity
 public:
     Rocket(std::string name, float x, float y, float w, float h,
            Texture2D* tex = nullptr, Color color = RED);
+    EntityType getType() const override {
+      return EntityType::Rocket;
+    }
     void fly(float dt);
     
     float getFuel() const;
@@ -21,7 +24,14 @@ public:
     void steer(float dt, float steerPower);
 
     int draw() override;
-    void onResize(int w, int h) override;
+    void drawThrustVisual();
+    void onResize(int newW, int newH) override;
+    void onCollision(Entity& other) override;
+
+    void checkIfWinCondition();
+    bool playerWon() const override;
+
+    bool hasLanded() const;
 
     static constexpr float gravity = 750.0f;
     static constexpr float terminalVelocity = 1250.0f;
@@ -29,16 +39,27 @@ public:
     static constexpr float thrustPower = 2000.0f;
     static constexpr float rotationPower = 100.0f;
 
-    static constexpr float maxFuel = 100.0f;
-    static constexpr float fuelDeprecation = 100.0f;
+    static constexpr float maxFuel = 1.0f;
+    static constexpr float fuelDeprecation = 1.20f;
+
+    static constexpr float winVelocityCap = 150.0f;
+
+    Vector2 thrustVisualSize = {10, 15};
+    Color thrustVisualColor = RED;
 
 private:
     
+    bool flying;
+
     float fuel = maxFuel;
     Bar fuelBar{PURPLE, Fade(BLACK, 0.5f)};
 
     Vector2 padding = {20.0f, 20.0f};
     Vector2 barWH = {20, 200};
+
+    bool rocketLanded = false;
+
+    bool rocketLandedSmoothly = false;
 
     // Define the positioning for fuelBar here
     Rectangle fuelBarRect(int w, int h) const {
@@ -51,6 +72,9 @@ private:
     }
 
     Vector2 velocity = {0.0f, 0.0f};
+    float rotationVelocity;
+
+    int w, h;
 
     const std::array<int, 3> flyKeys  = { KEY_W, KEY_SPACE, KEY_UP };
     const std::array<int, 2>  leftKeys = { KEY_A, KEY_LEFT };

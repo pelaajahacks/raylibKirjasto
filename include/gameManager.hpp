@@ -5,6 +5,9 @@
 #include <string>
 #include "entity.hpp"
 #include "startTimer.hpp"
+#include "rocket.hpp"
+#include "rocketPlatform.hpp"
+
 
 class GameManager {
   public:
@@ -25,6 +28,8 @@ class GameManager {
     void updateEntities(float dt);
     void refreshEntities();
 
+    void collisionLoop();
+
     void reset();
 
     bool isRunning() const;
@@ -32,12 +37,16 @@ class GameManager {
     void stop();
 
     bool wantsReset();
+    void checkResetBind();
 
     static constexpr float gracePeriod = 1.0f;
 
   private:
     std::vector<std::unique_ptr<Entity>> entities;
     std::unique_ptr<StartTimer> timer;
+
+    std::unique_ptr<Rocket> player;
+    std::unique_ptr<RocketPlatform> platform;
 
     bool gamePaused;
     bool gameRunning = true;

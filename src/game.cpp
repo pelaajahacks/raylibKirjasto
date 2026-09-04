@@ -9,9 +9,9 @@ GameManager manager;
 Game::Game(std::string windowName, float w, float h, Color bgColor)
     : w(w), h(h), windowName(windowName), bg(nullptr), bgColor(bgColor)
 {
-    
+    SetConfigFlags(FLAG_VSYNC_HINT); 
     InitWindow((int)w, (int)h, windowName.c_str());
-    SetTargetFPS(60);
+    //SetTargetFPS(60);
 
     manager.windowResized(w, h);
 

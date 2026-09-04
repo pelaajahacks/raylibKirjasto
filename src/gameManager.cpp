@@ -1,5 +1,4 @@
 #include "gameManager.hpp"
-#include "rocket.hpp"
 #include <algorithm>
 #include <raylib.h>
 
@@ -23,11 +22,33 @@ void GameManager::refreshEntities() {
     );
 }
 
+void GameManager::checkResetBind() {
+  if(IsKeyPressed(KEY_F2)) {
+    resetReq = true;
+  }
+
+}
+
 void GameManager::inputLoop(float dt) {
   for (auto& e : entities) {
     if (e->isPlayer)
         e->input(dt);
   }
+  checkResetBind();
+}
+
+void GameManager::collisionLoop() {
+  for (size_t i = 0; i < entities.size(); ++i) {
+    for (size_t j = i + 1; j < entities.size(); ++j) {
+
+      if (!entities[i]->collidesWith(*entities[j]))
+        continue;
+
+      entities[i]->onCollision(*entities[j]);
+      entities[j]->onCollision(*entities[i]);
+    }
+  }
+
 }
 
 void GameManager::updateEntities(float dt) {
@@ -35,6 +56,9 @@ void GameManager::updateEntities(float dt) {
     e->update(dt);
     if(e->checkWindowCollisions(w, h)) { resetReq = true; };
   }
+  collisionLoop();
+
+ 
 }
 
 void GameManager::updateWindowSizeForEntities() {
@@ -62,10 +86,24 @@ void GameManager::draw() {
 }
 
 int GameManager::init() {
-    Rocket player("Lunaarinen Ländääjä", w/2, h/4, 50, 50, nullptr, PURPLE);
+    Rocket player("Terska Thruster", w/2, h/4, 40, 65, nullptr, PURPLE);
     player.isPlayer = true;
     entities.push_back(std::make_unique<Rocket>(player));
 
+    float platformWidth = 300;
+    float platformHeight = 30;
+
+    std::unique_ptr<RocketPlatform> platform =
+    std::make_unique<RocketPlatform>(
+      Rectangle{
+        (float)w / 2,
+        (float)h / 1.2f,
+        platformWidth,
+        platformHeight
+      }
+    );
+
+entities.push_back(std::move(platform));
     return 1;
 }
 

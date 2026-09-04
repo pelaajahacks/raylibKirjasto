@@ -77,7 +77,9 @@ int Entity::draw()
   else {
     DrawRectanglePro(rect, Vector2{rect.width*0.5f, rect.height*0.5f}, rotation, color);
   }
-  nametag.draw(rect.x, rect.y, rect.width, rect.height);
+  if(name != "") {
+    nametag.draw(rect.x, rect.y, rect.width, rect.height);
+  }
 
   
   return 1;
@@ -109,3 +111,17 @@ bool Entity::checkWindowCollisions(int w, int h) {
   if(rect.x > w || rect.y > h) { return true; }
   return false;
 }
+Rectangle Entity::getBounds() const {
+    return {
+        rect.x - rect.width / 2.0f,
+        rect.y - rect.height / 2.0f,
+        rect.width,
+        rect.height
+    };
+}
+
+bool Entity::collidesWith(const Entity& other) const {
+    return CheckCollisionRecs(getBounds(), other.getBounds());
+}
+
+bool Entity::playerWon() const { return 0; }

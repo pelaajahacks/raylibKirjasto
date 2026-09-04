@@ -6,9 +6,18 @@
 #include <vector>
 #include <nametag.hpp>
 
+enum class EntityType {
+    Entity,
+    Rocket,
+    Platform
+};
+
 class Entity {
   public:
     Entity(std::string name, float x, float y, float w, float h, Texture2D* tex = nullptr, Color color = RED);
+    virtual EntityType getType() const {
+        return EntityType::Entity;
+    }
 
     bool isPlayer = false;
     float speed = 400.0f;
@@ -33,9 +42,15 @@ class Entity {
     Nametag& getNametag();
     virtual void input(float dt);
     virtual void update(float dt);
+    virtual bool playerWon() const;
     bool checkWindowCollisions(int w, int h);
 
     virtual void onResize(int w, int h) {}
+
+    Rectangle getBounds() const;
+
+    bool collidesWith(const Entity& other) const;
+    virtual void onCollision(Entity& other) {}
 
 
 

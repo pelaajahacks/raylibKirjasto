@@ -16,8 +16,7 @@ void Nametag::draw(float x, float y, float entityWidth, float entityHeight) cons
     float textWidth = MeasureText(getText().c_str(), fontSize);
     float drawX = x - (textWidth * 0.5f);
 
-    float topY = y - (entityHeight * 1.0f);
-    float drawY = topY - YPADDING;
+    float drawY = y - entityHeight/2 - fontSize - YPADDING;
 
     Rectangle bgRect = {
         drawX - padding,
