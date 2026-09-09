@@ -5,17 +5,14 @@ Text::Text(std::string text)
 {
 }
 
-void Text::setColor(Color fgColor)
-{
+void Text::setColor(Color fgColor) {
     fg = fgColor;
 }
 
-void Text::setText(std::string newText)
-{
+void Text::setText(std::string newText) {
     text = newText;
 }
-const std::string& Text::getText() const
-{
+const std::string& Text::getText() const {
     return text;
 }
 

@@ -15,17 +15,14 @@ std::string Entity::getName() const {
   return name;
 }
 
-Vector2 Entity::getPos() const
-{
+Vector2 Entity::getPos() const {
     return Vector2{ rect.x, rect.y };
 }
-Vector2 Entity::getSize() const
-{
+Vector2 Entity::getSize() const {
     return { rect.width, rect.height };
 }
 
-int Entity::setPos(float nx, float ny)
-{
+int Entity::setPos(float nx, float ny) {
     float screenW = GetScreenWidth();
     float screenH = GetScreenHeight();
 
@@ -47,30 +44,25 @@ void Entity::setRotation(float rot) {
   rotation = rot;
 }
 
-int Entity::destroy()
-{
+int Entity::destroy() {
     alive = false;
     return 1;
 }
 
-bool Entity::isAlive() const
-{
+bool Entity::isAlive() const {
     return alive;
 }
 
-Color Entity::getColor() const
-{
+Color Entity::getColor() const {
     return color;
 }
 
-int Entity::setColor(Color c)
-{
+int Entity::setColor(Color c) {
     color = c;
     return 1;
 }
 
-int Entity::draw()
-{
+int Entity::draw() {
   if (texture != nullptr) {
     DrawTextureRec(*texture, rect, Vector2{rect.x, rect.y}, WHITE);
   }
@@ -85,13 +77,11 @@ int Entity::draw()
   return 1;
 }
 
-Nametag& Entity::getNametag()
-{
+Nametag& Entity::getNametag() {
     return nametag;
 }
 
-void Entity::input(float dt)
-{
+void Entity::input(float dt) {
     Vector2 pos = getPos();
 
     if (IsKeyDown(KEY_D)) pos.x += speed * dt;

@@ -12,10 +12,8 @@ Rocket::Rocket(std::string name, float x, float y, float w, float h,
 } 
 
 template <size_t N>
-bool isAnyKeyDown(const std::array<int, N>& keys)
-{
-    for (int key : keys)
-    {
+bool isAnyKeyDown(const std::array<int, N>& keys) {
+    for (int key : keys) {
         if (IsKeyDown(key))
             return true;
     }
@@ -94,8 +92,7 @@ void Rocket::setFuel(float newFuel) {
 }
 
 
-void Rocket::fly(float dt)
-{
+void Rocket::fly(float dt) {
   if(fuel>0.0f && !rocketLanded) {
     float rad = getRotation() * DEG2RAD;
     Vector2 force = {

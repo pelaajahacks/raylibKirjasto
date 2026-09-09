@@ -7,6 +7,9 @@ public:
 
     virtual void update(float dt) = 0;
     virtual void draw() = 0;
+    virtual void init(int w, int h) = 0;
+
+    virtual void reset() = 0;
 
     virtual void onResize(float w, float h) {}
 };

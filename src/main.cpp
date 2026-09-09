@@ -2,7 +2,7 @@
 
 int main()
 {
-    Game game("My Raylib Game", 1280, 720);
+    Game game("Lunar Lander", 1280, 720);
 
     game.run();
 

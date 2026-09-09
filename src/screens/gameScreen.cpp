@@ -38,12 +38,17 @@ void GameScreen::init(int w, int h) {
 
 }
 
-bool GameScreen::checkPause() const {
-  return startTimer>0.0f;
-}
-
 void GameScreen::drawFPS() {
     DrawText(TextFormat("FPS: %d", GetFPS()), 10, 10, 20, PURPLE);
+}
+
+void GameScreen::drawTimer(std::string text) {
+  timer->draw(text, w, h);
+}
+void GameScreen::drawRoundedTimer() {
+  std::stringstream ss;
+  ss << std::fixed << std::setprecision(3) << startTimer;
+  drawTimer(ss.str());
 }
 
 void GameScreen::draw()
@@ -51,6 +56,13 @@ void GameScreen::draw()
     for (auto& entity : entities)
         entity->draw();
     drawFPS();
+}
+void GameScreen::inputLoop(float dt) {
+  for (auto& e : entities) {
+    if (e->isPlayer)
+        e->input(dt);
+  }
+  checkResetBind();
 }
 
 void GameScreen::collisionLoop() {
@@ -67,15 +79,6 @@ void GameScreen::collisionLoop() {
 
 }
 
-void GameScreen::drawTimer(std::string text) {
-  timer->draw(text, w, h);
-}
-void GameScreen::drawRoundedTimer() {
-  std::stringstream ss;
-  ss << std::fixed << std::setprecision(3) << startTimer;
-  drawTimer(ss.str());
-}
-
 void GameScreen::refreshEntities() {
   entities.erase(
         std::remove_if(
@@ -89,21 +92,17 @@ void GameScreen::refreshEntities() {
     );
 }
 
-void GameScreen::inputLoop(float dt) {
-  for (auto& e : entities) {
-    if (e->isPlayer)
-        e->input(dt);
-  }
-  checkResetBind();
+bool GameScreen::wantsReset() {
+  return resetReq;
 }
+bool GameScreen::checkPause() const {
+  return startTimer>0.0f;
+}
+
 void GameScreen::checkResetBind() {
   if(IsKeyPressed(KEY_F2)) {
     reset();
   }
-}
-
-bool GameScreen::wantsReset() {
-  return resetReq;
 }
 
 void GameScreen::reset() {
@@ -116,15 +115,6 @@ void GameScreen::reset() {
   updateWindowSizeForEntities();
 }
 
-void GameScreen::updateEntities(float dt) {
-  for (auto& e : entities) {
-    e->update(dt);
-    if(e->checkWindowCollisions(w, h)) { resetReq = true; };
-  }
-  collisionLoop();
-
- 
-}
 void GameScreen::onResize(float w, float h)
 {
     this->w = w;
@@ -137,6 +127,13 @@ void GameScreen::updateWindowSizeForEntities() {
   for (auto& e : entities) {
     e->onResize(w, h);
   }
+}
+void GameScreen::updateEntities(float dt) {
+  for (auto& e : entities) {
+    e->update(dt);
+    if(e->checkWindowCollisions(w, h)) { resetReq = true; };
+  }
+  collisionLoop();
 }
 
 void GameScreen::update(float dt) {

@@ -6,7 +6,7 @@
 
 class Game {
 public:
-    Game(std::string windowName, float w, float h, Color bgColor = RAYWHITE);
+    Game(std::string windowName, float w, float h);
     ~Game();
 
     void run();
@@ -15,6 +15,4 @@ public:
 private:
     float w, h;
     std::string windowName;
-    Texture2D* bg;
-    Color bgColor;
 };

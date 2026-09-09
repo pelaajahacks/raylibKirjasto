@@ -5,8 +5,7 @@ Nametag::Nametag(std::string text)
 {
 }
 
-void Nametag::setColor(Color fgColor, Color bgColor)
-{
+void Nametag::setColor(Color fgColor, Color bgColor) {
     fg = fgColor;
     bg = bgColor;
 }

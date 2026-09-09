@@ -2,6 +2,7 @@
 
 #include <state/stateMachine.hpp>
 #include <screens/gameScreen.hpp>
+#include <screens/mainMenu/mainMenuScreen.hpp>
 
 
 class GameManager {
