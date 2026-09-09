@@ -12,15 +12,9 @@ public:
     void run();
     void reset();
 
-
-    
-
-
 private:
     float w, h;
     std::string windowName;
     Texture2D* bg;
     Color bgColor;
-
-
 };

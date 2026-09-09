@@ -4,6 +4,7 @@ project(kirjasto LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 find_package(raylib CONFIG REQUIRED)
 
 file(GLOB_RECURSE SOURCES

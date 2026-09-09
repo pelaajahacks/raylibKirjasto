@@ -11,9 +11,7 @@ Game::Game(std::string windowName, float w, float h, Color bgColor)
 {
     SetConfigFlags(FLAG_VSYNC_HINT); 
     InitWindow((int)w, (int)h, windowName.c_str());
-    //SetTargetFPS(60);
-
-    manager.windowResized(w, h);
+    reset();
 
     // background texture optional
     // bg = LoadTexture("bg.png");
@@ -26,11 +24,6 @@ Game::~Game()
     CloseWindow();
 }
 
-
-
-void drawTimer() {
-  
-}
 void Game::run()
 {
 
@@ -41,7 +34,6 @@ void Game::run()
           h = GetScreenHeight();
           manager.windowResized(w, h);
         }
-        if(manager.wantsReset()) { reset(); continue; }
         
         float dt = GetFrameTime();
         BeginDrawing();
@@ -53,9 +45,7 @@ void Game::run()
             DrawTexture(*bg, 0, 0, WHITE);
         }
         manager.update(dt);
-        
         manager.draw();
-        manager.drawFPS();
 
         EndDrawing();
 
@@ -64,7 +54,5 @@ void Game::run()
 }
 
 void Game::reset() {
-    manager.reset();
-    manager.init();
-    manager.windowResized(w, h);
+    manager.init(w, h);
 }

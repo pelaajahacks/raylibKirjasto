@@ -42,7 +42,7 @@ public:
     static constexpr float maxFuel = 1.0f;
     static constexpr float fuelDeprecation = 1.20f;
 
-    static constexpr float winVelocityCap = 150.0f;
+    static constexpr float winVelocityCap = 100.0f;
 
     Vector2 thrustVisualSize = {10, 15};
     Color thrustVisualColor = RED;
