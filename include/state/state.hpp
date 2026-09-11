@@ -1,8 +1,9 @@
 #pragma once
 
-class State
-{
-public:
+#include "screens/styling/screenStyle.hpp"
+
+class State {
+  public:
     virtual ~State() = default;
 
     virtual void update(float dt) = 0;
@@ -12,4 +13,7 @@ public:
     virtual void reset() = 0;
 
     virtual void onResize(float w, float h) {}
+  protected:
+    ScreenStyle style;
+
 };

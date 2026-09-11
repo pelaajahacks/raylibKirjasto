@@ -15,6 +15,8 @@ add_executable(kirjasto ${SOURCES})
 
 target_include_directories(kirjasto PRIVATE
     ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/external/raygui/src
+    ${CMAKE_SOURCE_DIR}/external/layout
 )
 
 target_link_libraries(kirjasto PRIVATE

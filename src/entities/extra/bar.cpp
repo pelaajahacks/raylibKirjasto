@@ -1,4 +1,4 @@
-#include "bar.hpp"
+#include "entities/extra/bar.hpp"
 
 Bar::Bar(Color barColor, Color bgColor)
   : barColor(barColor),

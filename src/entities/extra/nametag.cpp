@@ -1,4 +1,4 @@
-#include "nametag.hpp"
+#include "entities/extra/nametag.hpp"
 
 Nametag::Nametag(std::string text)
     : Text(text)

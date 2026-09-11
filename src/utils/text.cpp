@@ -1,7 +1,7 @@
-#include "text.hpp"
+#include "utils/text.hpp"
 
-Text::Text(std::string text)
-    : text(text)
+Text::Text(std::string text, Color fg, int FONTSIZE)
+    : text(text), fg(fg), FONTSIZE(FONTSIZE)
 {
 }
 
@@ -17,5 +17,5 @@ const std::string& Text::getText() const {
 }
 
 void Text::draw(int x, int y) const {
-  DrawText(text.c_str(), x, y, fontSize, fg);
+  DrawText(text.c_str(), x, y, FONTSIZE, fg);
 }

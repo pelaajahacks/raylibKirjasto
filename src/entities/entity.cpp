@@ -1,5 +1,5 @@
-#include "entity.hpp"
-#include "nametag.hpp"
+#include "entities/entity.hpp"
+#include "entities/extra/nametag.hpp"
 #include <algorithm>
 
 Entity::Entity(std::string name, float x, float y, float w, float h, Texture2D* tex, Color color)
@@ -97,9 +97,7 @@ void Entity::update(float dt) {
 }
 
 bool Entity::checkWindowCollisions(int w, int h) {
-  if(rect.x < 0 || rect.y < 0) { return true; }
-  if(rect.x > w || rect.y > h) { return true; }
-  return false;
+    return rect.x < 0 || rect.x > w || rect.y < 0 || rect.y > h;
 }
 Rectangle Entity::getBounds() const {
     return {

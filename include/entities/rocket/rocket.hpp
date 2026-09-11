@@ -1,9 +1,11 @@
-#include "entity.hpp"
-#include "bar.hpp"
+#include "../entity.hpp"
+#include "../extra/bar.hpp"
+#include "utils/winloseAnnouncement.hpp"
 #include <vector>
 #include <raylib.h>
 #include <string>
 #include <array>
+#include <memory>
 
 class Rocket : public Entity
 {
@@ -28,14 +30,13 @@ public:
     void onResize(int newW, int newH) override;
     void onCollision(Entity& other) override;
 
-    void checkIfWinCondition();
+    bool checkIfWinCondition();
     bool playerWon() const override;
+    void onLand();
 
     bool hasLanded() const;
 
-    static constexpr float gravity = 750.0f;
-    static constexpr float terminalVelocity = 1250.0f;
-
+    
     static constexpr float thrustPower = 2000.0f;
     static constexpr float rotationPower = 100.0f;
 
@@ -44,11 +45,13 @@ public:
 
     static constexpr float winVelocityCap = 100.0f;
 
+    static constexpr float AUTORESETTIME = 2.0f;
+
     Vector2 thrustVisualSize = {10, 15};
     Color thrustVisualColor = RED;
 
 private:
-    
+    std::unique_ptr<Announcement> announcement;
     bool flying;
 
     float fuel = maxFuel;
@@ -73,6 +76,8 @@ private:
 
     Vector2 velocity = {0.0f, 0.0f};
     float rotationVelocity;
+
+    float resetTimer = AUTORESETTIME;
 
     int w, h;
 

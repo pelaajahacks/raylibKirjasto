@@ -19,13 +19,27 @@ class MainMenuScreen : public State {
     void reset() override;
 
     Layout createMenuLayout();
+    Layout createTitleLayout();
+    Layout createTitleChildrenLayout();
+
+    void onResize(float w, float h) override;
 
 
 
 
     static constexpr const char* playButtonText = "Play";
   private:
-    Panel menuPanel;
+    Panel canvas;
+    Panel* menuPanel;
+    Panel* titlePanel;
+
+    Layout buttonLayout = [] {
+        Layout layout;
+        layout.width = SizeMode::Fill;
+        layout.height = SizeMode::FitContent;
+        layout.flexGrow = 1.0f;
+        return layout;
+    }();
 
     int w, h;
 };

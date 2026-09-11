@@ -2,7 +2,8 @@
 
 #include <string>
 #include <raylib.h>
-#include "entity.hpp"
+#include "entities/entity.hpp"
+#include "gameManager.hpp"
 
 class Game {
 public:

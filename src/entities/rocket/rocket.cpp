@@ -1,9 +1,8 @@
-#include "rocket.hpp"
+#include "entities/rocket/rocket.hpp"
+
 #include <raylib.h>
 #include <cmath>
 
-#include <stdio.h>
-#include <iostream>
 
 Rocket::Rocket(std::string name, float x, float y, float w, float h,
                Texture2D* tex, Color color)
@@ -62,6 +61,7 @@ int Rocket::draw() {
   Entity::draw();
   drawThrustVisual();
   fuelBar.draw(fuel, maxFuel);
+  if(rocketLanded) { announcement->draw(w, h); }
   return 1;
 }
 
@@ -121,6 +121,11 @@ void Rocket::update(float dt) {
   if (velocity.y < -terminalVelocity)
     velocity.y = -terminalVelocity;
   setPos(getPos().x + velocity.x * dt, getPos().y + velocity.y * dt);
+
+  if(rocketLanded) {
+    resetTimer -= dt;
+    if(resetTimer >0.0f) {}
+  }
 }
 
 void Rocket::onResize(int newW, int newH) {
@@ -129,24 +134,22 @@ void Rocket::onResize(int newW, int newH) {
   h = newH;
 }
 
-void Rocket::checkIfWinCondition() {
-  if(velocity.y<winVelocityCap) {
-    rocketLandedSmoothly = true;
-  }
+bool Rocket::checkIfWinCondition() {
+  return velocity.y<winVelocityCap;
+}
+
+void Rocket::onLand() {
+  rocketLanded = true;
+  announcement = std::make_unique<Announcement>(rocketLandedSmoothly);
+
 }
 
 void Rocket::onCollision(Entity& other) {
     if (other.getType() == EntityType::Platform) {
         if(!rocketLanded) {
-          checkIfWinCondition();
-          if(rocketLandedSmoothly) {
-            std::cout << "Player won" << std::endl;
-          }
-          else {
-            std::cout << "Player lost" << std::endl;
-          }
-        } 
-        rocketLanded = true;
+          rocketLandedSmoothly = checkIfWinCondition();
+          onLand();
+        }
         Rectangle platform = other.getBounds();
         Rectangle rocket = getBounds();
 

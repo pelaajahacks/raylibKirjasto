@@ -8,6 +8,7 @@ GameScreen::GameScreen(int w, int h)
   : w(w), h(h) {
 }
 void GameScreen::init(int w, int h) {
+    style.background = bg;
 
     auto rocket = std::make_unique<Rocket>(
         "Lunaarinen Ländääjä",
@@ -53,6 +54,7 @@ void GameScreen::drawRoundedTimer() {
 
 void GameScreen::draw()
 {
+    ClearBackground(style.background);
     for (auto& entity : entities)
         entity->draw();
     drawFPS();
@@ -64,6 +66,7 @@ void GameScreen::inputLoop(float dt) {
   }
   checkResetBind();
 }
+
 
 void GameScreen::collisionLoop() {
   for (size_t i = 0; i < entities.size(); ++i) {
@@ -92,6 +95,40 @@ void GameScreen::refreshEntities() {
     );
 }
 
+
+void GameScreen::onResize(float w, float h)
+{
+    this->w = w;
+    this->h = h;
+
+    updateWindowSizeForEntities();
+}
+
+void GameScreen::updateWindowSizeForEntities() {
+  for (auto& e : entities) {
+    e->onResize(w, h);
+  }
+}
+void GameScreen::updateEntities(float dt) {
+  for (auto& e : entities) {
+    e->update(dt);
+    if(e->checkWindowCollisions(w, h)) { reset(); };
+  }
+  collisionLoop();
+}
+
+void GameScreen::update(float dt) {
+    if(!checkPause()) {
+      inputLoop(dt);
+      updateEntities(dt);
+      refreshEntities();
+    }
+    else {
+      drawRoundedTimer();
+    }
+    startTimer -= dt;
+}
+
 bool GameScreen::wantsReset() {
   return resetReq;
 }
@@ -114,37 +151,3 @@ void GameScreen::reset() {
   startTimer = gracePeriod;
   updateWindowSizeForEntities();
 }
-
-void GameScreen::onResize(float w, float h)
-{
-    this->w = w;
-    this->h = h;
-
-    updateWindowSizeForEntities();
-}
-
-void GameScreen::updateWindowSizeForEntities() {
-  for (auto& e : entities) {
-    e->onResize(w, h);
-  }
-}
-void GameScreen::updateEntities(float dt) {
-  for (auto& e : entities) {
-    e->update(dt);
-    if(e->checkWindowCollisions(w, h)) { resetReq = true; };
-  }
-  collisionLoop();
-}
-
-void GameScreen::update(float dt) {
-    if(!checkPause()) {
-      inputLoop(dt);
-      updateEntities(dt);
-      refreshEntities();
-    }
-    else {
-      drawRoundedTimer();
-    }
-    startTimer -= dt;
-}
-

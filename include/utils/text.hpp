@@ -5,17 +5,16 @@
 
 class Text {
   public:
-    Text(std::string text);
+    Text(std::string text, Color fg = BLACK, int FONTSIZE = 16.0f);
     virtual void setColor(Color fg);
     void setText(std::string text);
     const std::string& getText() const;
 
     virtual void draw(int x, int y) const;
 
-    int fontSize = 16.0f;
   private:
     std::string text = "text";
+    int FONTSIZE;
   protected:
-    Color fg = BLACK;
-
+    Color fg;
 };

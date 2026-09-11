@@ -1,4 +1,4 @@
-#include "gameManager.hpp"
+#include "core/gameManager.hpp"
 
 void GameManager::init(int w, int h) {
   auto screen = std::make_unique<MainMenuScreen>(w, h);

@@ -1,10 +1,10 @@
 #pragma once
 
+#include <entities/extra/nametag.hpp>
 #include <string>
 #include <raylib.h>
 #include <string>
 #include <vector>
-#include <nametag.hpp>
 
 enum class EntityType {
     Entity,
@@ -51,6 +51,10 @@ class Entity {
 
     bool collidesWith(const Entity& other) const;
     virtual void onCollision(Entity& other) {}
+
+    static constexpr float gravity = 750.0f;
+    static constexpr float terminalVelocity = 1250.0f;
+
 
 
 

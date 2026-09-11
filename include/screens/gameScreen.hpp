@@ -1,10 +1,9 @@
 #pragma once
 
 #include "state/state.hpp"
-#include "entity.hpp"
-#include "startTimer.hpp"
-#include "rocket.hpp"
-#include "rocketPlatform.hpp"
+#include "utils/startTimer.hpp"
+#include "entities/rocket/rocket.hpp"
+#include "entities/rocket/rocketPlatform.hpp"
 
 #include <vector>
 #include <memory>
@@ -36,6 +35,7 @@ class GameScreen : public State {
     void refreshEntities();
 
     void collisionLoop();
+    void checkBounds();
 
     bool checkPause() const;
     
@@ -62,5 +62,7 @@ class GameScreen : public State {
     bool gamePaused;
 
     int w, h;
+
+    Color bg = RAYWHITE;
 
 };

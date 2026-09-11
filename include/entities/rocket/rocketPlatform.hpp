@@ -1,6 +1,6 @@
 #pragma once
 
-#include "entity.hpp"
+#include "../entity.hpp"
 
 class RocketPlatform : public Entity {
   public:
