@@ -27,7 +27,7 @@ public:
     void update() override {}
 
 private:
-    void createChildLayout(UIElement& child);
+    void createChildLayout(UIElement& child, size_t index, size_t count);
     void runLayout();
 
     lay_context ctx;

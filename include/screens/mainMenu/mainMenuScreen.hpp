@@ -30,14 +30,22 @@ class MainMenuScreen : public State {
     static constexpr const char* playButtonText = "Play";
   private:
     Panel canvas;
-    Panel* menuPanel;
     Panel* titlePanel;
+    Panel* menuPanel;
+    Panel* footerPanel;
 
     Layout buttonLayout = [] {
         Layout layout;
         layout.width = SizeMode::Fill;
         layout.height = SizeMode::FitContent;
         layout.flexGrow = 1.0f;
+        return layout;
+    }();
+
+    Layout labelLayout = [] {
+        Layout layout;
+        layout.width = SizeMode::FitContent;
+        layout.height = SizeMode::FitContent;
         return layout;
     }();
 

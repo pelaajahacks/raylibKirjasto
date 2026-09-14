@@ -6,7 +6,7 @@
 class Label : public UIElement
 {
 public:
-    Label(Rectangle bounds, Layout layout, const std::string& text, Color color = BLACK, int fontSize = 20);
+    Label(Layout layout, const std::string& text, Color color = BLACK, int fontSize = 20);
 
     void update() override {};
     void draw() override;
