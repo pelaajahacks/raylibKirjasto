@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(raylib CONFIG REQUIRED)
 
-add_subdirectory(ui)
+add_subdirectory(libs/ui)
+add_subdirectory(libs/engine)
 
 file(GLOB_RECURSE SOURCES
     "src/*.cpp"
@@ -22,4 +23,5 @@ target_include_directories(kirjasto PRIVATE
 target_link_libraries(kirjasto PRIVATE
     raylib
     ui
+    engine
 )
