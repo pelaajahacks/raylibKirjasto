@@ -1,4 +1,4 @@
-#include "screens/mainMenu/UI/elements/label.hpp"
+#include "ui/Label.hpp"
 #include "raylib.h"
 
 Label::Label(Layout layout, const std::string& text, Color color, int fontSize)

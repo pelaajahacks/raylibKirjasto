@@ -2,9 +2,6 @@
 
 #include "utils/text.hpp"
 
-#include <raylib.h>
-#include <string>
-
 class Nametag: public Text {
   public:
     Nametag(std::string text);

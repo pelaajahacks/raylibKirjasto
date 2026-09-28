@@ -3,7 +3,7 @@
 #include <string>
 #include <raylib.h>
 #include "entities/entity.hpp"
-#include "gameManager.hpp"
+#include "core/gameManager.hpp"
 
 class Game {
 public:

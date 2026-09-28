@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(raylib CONFIG REQUIRED)
 
+add_subdirectory(ui)
+
 file(GLOB_RECURSE SOURCES
     "src/*.cpp"
 )
@@ -15,10 +17,9 @@ add_executable(kirjasto ${SOURCES})
 
 target_include_directories(kirjasto PRIVATE
     ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/external/raygui/src
-    ${CMAKE_SOURCE_DIR}/external/layout
 )
 
 target_link_libraries(kirjasto PRIVATE
     raylib
+    ui
 )

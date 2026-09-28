@@ -1,12 +1,10 @@
 #pragma once
 
-#include "screens/mainMenu/UI/core/UIElement.hpp"
+#include "ui/UIElement.hpp"
 
 #include "raygui.h"
 
-#include <memory>
 #include <string>
-
 
 class Button : public UIElement {
 public:

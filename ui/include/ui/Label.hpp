@@ -1,6 +1,7 @@
 #pragma once
 
-#include "screens/mainMenu/UI/core/UIElement.hpp"
+#include "ui/UIElement.hpp"
+
 #include <string>
 
 class Label : public UIElement

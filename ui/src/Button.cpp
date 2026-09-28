@@ -1,4 +1,4 @@
-#include "screens/mainMenu/UI/elements/button.hpp"
+#include "ui/Button.hpp"
 
 Button::Button(Layout layout, const std::string& text)
     : UIElement({0, 0, 0, 0}, layout),

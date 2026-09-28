@@ -1,4 +1,4 @@
-#include "screens/mainMenu/UI/containers/panel.hpp"
+#include "ui/Panel.hpp"
 
 #include <cstdint>
 
@@ -80,10 +80,16 @@ void Panel::runLayout()
 void Panel::draw() {
     runLayout();
 
-    GuiPanel(bounds, nullptr);
+    if (drawBackground)
+        GuiPanel(bounds, nullptr);
 
     for (auto& child : children)
         child->draw();
+}
+
+void Panel::update() {
+    for (auto& child : children)
+        child->update();
 }
 
 void Panel::createChildLayout(UIElement& child, size_t index, size_t count)

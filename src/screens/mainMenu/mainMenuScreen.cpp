@@ -1,9 +1,11 @@
 #include "screens/mainMenu/mainMenuScreen.hpp"
-#include "screens/mainMenu/UI/elements/button.hpp"
-#include "screens/mainMenu/UI/elements/label.hpp"
+#include "ui/Button.hpp"
+#include "ui/Label.hpp"
+#include "core/gameManager.hpp"
 
-MainMenuScreen::MainMenuScreen(int w, int h)
-    : w(w),
+MainMenuScreen::MainMenuScreen(GameManager* manager, int w, int h)
+    : manager(manager),
+      w(w),
       h(h),
       canvas(
         Layout{
@@ -20,6 +22,8 @@ MainMenuScreen::MainMenuScreen(int w, int h)
       titlePanel(nullptr),
       menuPanel(nullptr),
       footerPanel(nullptr){
+        canvas.setDrawBackground(false);
+
         Layout titleLayout{
     .width = SizeMode::Fixed,
     .height = SizeMode::Fixed,
@@ -77,9 +81,9 @@ FlexLayout footerChildrenLayout{
 void MainMenuScreen::init(int w, int h) {
   onResize(w, h);
 
-  menuPanel->add<Button>(buttonLayout, "Start Flight");
-  menuPanel->add<Button>(buttonLayout, "Settings");
-  menuPanel->add<Button>(buttonLayout, "Quit");
+  startButton = menuPanel->add<Button>(buttonLayout, "Start Flight");
+  settingsButton = menuPanel->add<Button>(buttonLayout, "Settings");
+  quitButton = menuPanel->add<Button>(buttonLayout, "Quit");
 
   footerPanel->add<Label>(labelLayout, "v1.0.0", DARKGRAY, 14);
   footerPanel->add<Label>(labelLayout, "FUEL: FULL", GREEN, 14);
@@ -90,7 +94,17 @@ void MainMenuScreen::draw() {
   canvas.draw();
 }
 
-void MainMenuScreen::update(float dt) {  }
+void MainMenuScreen::update(float dt) {
+  if (startButton && startButton->isClicked()) {
+    manager->startGame(w, h);
+    return;
+  }
+
+  if (quitButton && quitButton->isClicked())
+    manager->stop();
+
+  canvas.update();
+}
 
 void MainMenuScreen::reset() {
   init(w, h);

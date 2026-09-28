@@ -1,8 +1,6 @@
 #pragma once
 
 #include "text.hpp"
-#include <raylib.h>
-#include <string>
 
 class StartTimer : public Text {
   public:

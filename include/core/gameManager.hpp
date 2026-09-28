@@ -13,6 +13,8 @@ class GameManager {
 
     void init(int w, int h);
 
+    void startGame(int w, int h);
+
     void windowResized(int w, int h);
 
     bool isRunning() const;

@@ -2,7 +2,8 @@
 
 #include "raylib.h"
 #include "layout.h"
-#include "screens/mainMenu/UI/core/layout/layout.hpp"
+
+#include "ui/layout.hpp"
 
 class UIElement {
 public:

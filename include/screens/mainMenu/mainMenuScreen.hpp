@@ -1,15 +1,18 @@
 #pragma once
 
 #include "state/state.hpp"
-#include "screens/mainMenu/UI/containers/panel.hpp"
-#include "screens/mainMenu/UI/core/layout/layout.hpp"
+#include "ui/Panel.hpp"
+#include "ui/Button.hpp"
+#include "ui/layout.hpp"
 
 #include <string>
 
 
+class GameManager;
+
 class MainMenuScreen : public State {
   public:
-    MainMenuScreen(int w, int h);
+    MainMenuScreen(GameManager* manager, int w, int h);
 
     void draw() override;
     void update(float dt) override;
@@ -29,10 +32,16 @@ class MainMenuScreen : public State {
 
     static constexpr const char* playButtonText = "Play";
   private:
+    GameManager* manager;
+
     Panel canvas;
     Panel* titlePanel;
     Panel* menuPanel;
     Panel* footerPanel;
+
+    Button* startButton = nullptr;
+    Button* settingsButton = nullptr;
+    Button* quitButton = nullptr;
 
     Layout buttonLayout = [] {
         Layout layout;

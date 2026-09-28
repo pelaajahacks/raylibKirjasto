@@ -1,13 +1,12 @@
 #pragma once
 
-
 #include "raygui.h"
 #include "layout.h"
 
 #include <memory>
 #include <vector>
 
-#include "../core/UIElement.hpp"
+#include "ui/UIElement.hpp"
 
 class Panel : public UIElement {
 public:
@@ -24,7 +23,9 @@ public:
     }
 
     void draw() override;
-    void update() override {}
+    void update() override;
+
+    void setDrawBackground(bool draw) { drawBackground = draw; }
 
 private:
     void createChildLayout(UIElement& child, size_t index, size_t count);
@@ -35,4 +36,6 @@ private:
 
     FlexLayout flexLayout;
     std::vector<std::unique_ptr<UIElement>> children;
+
+    bool drawBackground = true;
 };

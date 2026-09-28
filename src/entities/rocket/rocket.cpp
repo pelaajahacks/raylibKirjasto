@@ -1,6 +1,5 @@
 #include "entities/rocket/rocket.hpp"
 
-#include <raylib.h>
 #include <cmath>
 
 

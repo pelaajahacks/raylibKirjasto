@@ -1,10 +1,5 @@
 #include "core/game.hpp"
 
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
-#define LAY_IMPLEMENTATION
-#include "layout.h"
-
 GameManager manager;
 
 Game::Game(std::string windowName, float w, float h)
