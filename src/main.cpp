@@ -5,14 +5,11 @@
 
 #include "game/screens/mainMenu/mainMenuScreen.hpp"
 
-#include <ui/ui.hpp>
-
 int main()
 {
     GameManager manager;
-    manager.init(std::make_unique<MainMenuScreen>(1280, 720));
     Game game("Lunar Lander", 1280, 720, manager);
-    ui::init();
+    manager.init(std::make_unique<MainMenuScreen>(1280, 720));
 
     game.run();
 

@@ -1,12 +1,6 @@
-[submodule "raygui"]
-	path = libs/ui/external/raygui
-	url = https://github.com/raysan5/raygui.git
-[submodule "layout"]
-	path = libs/ui/external/layout
-	url = https://github.com/randrew/layout
-[submodule "libs/ui/external/raygui"]
-	path = libs/ui/external/raygui
-	url = https://github.com/raysan5/raygui.git
-[submodule "libs/ui/external/layout"]
-	path = libs/ui/external/layout
-	url = https://github.com/randrew/layout
+[submodule "libs/ui"]
+	path = libs/ui
+	url = git@github.com:pelaajahacks/raylibUI.git
+[submodule "libs/engine"]
+	path = libs/engine
+	url = git@github.com:pelaajahacks/raylibEngine.git
