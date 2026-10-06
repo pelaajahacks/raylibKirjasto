@@ -4,26 +4,8 @@
 #include "engine/core/manager/gameManager.hpp"
 
 void MainMenuScreen::init(int w, int h) {
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
-  canvas.add(std::make_unique<Button>("Testing"));
+  GuiSetStyle(DEFAULT, TEXT_PADDING, 16);
+  canvas.add(std::make_unique<Button>("Haloo"));
   onResize(w, h);
 }
 
