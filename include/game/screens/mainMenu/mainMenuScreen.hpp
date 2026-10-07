@@ -9,9 +9,9 @@
 #include <string>
 
 
-class GameManager;
+namespace game {
 
-class MainMenuScreen : public State {
+class MainMenuScreen : public engine::State {
   public:
     MainMenuScreen(int w, int h)
       : w(w),
@@ -36,9 +36,15 @@ class MainMenuScreen : public State {
 
     static constexpr const char* playButtonText = "Play";
   private:
-    Panel canvas;
-    Layout layout;
+    ui::Panel canvas;
+    ui::Layout layout;
     ScreenStyle style;
+
+    bool uiDirty = false;
+    std::string buttonText = "Testing";
+    ui::Button* btn = nullptr;
 
     int w, h;
 };
+
+} // namespace game

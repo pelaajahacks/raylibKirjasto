@@ -7,9 +7,9 @@
 
 int main()
 {
-    GameManager manager;
-    Game game("Lunar Lander", 1280, 720, manager);
-    manager.init(std::make_unique<MainMenuScreen>(1280, 720));
+    engine::GameManager manager;
+    engine::Game game("Lunar Lander", 1280, 720, manager);
+    manager.init(std::make_unique<game::MainMenuScreen>(1280, 720));
 
     game.run();
 
