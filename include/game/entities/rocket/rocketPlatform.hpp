@@ -2,11 +2,11 @@
 
 #include "engine/entities/entity.hpp"
 
-class RocketPlatform : public Entity {
+class RocketPlatform : public engine::Entity {
   public:
     RocketPlatform(Rectangle rect);
-    EntityType getType() const override {
-      return EntityType::Platform;
+    engine::EntityType getType() const override {
+      return engine::EntityType::Platform;
     }
 
   private:

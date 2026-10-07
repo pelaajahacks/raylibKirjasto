@@ -5,14 +5,16 @@
 
 #include "game/screens/mainMenu/mainMenuScreen.hpp"
 
-#include <ui/ui.hpp>
-
 int main()
 {
-    GameManager manager;
+    engine::GameManager manager;
+
+    // Game calls InitWindow, so it has to exist before the first state:
+    // GameManager refuses states before that, because widgets measure text
+    // against a font that only exists once there is a window.
+    engine::Game game("Lunar Lander", 1280, 720, manager);
+
     manager.init(std::make_unique<MainMenuScreen>(1280, 720));
-    Game game("Lunar Lander", 1280, 720, manager);
-    ui::init();
 
     game.run();
 

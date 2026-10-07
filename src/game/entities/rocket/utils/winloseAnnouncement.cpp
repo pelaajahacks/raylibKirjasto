@@ -7,5 +7,5 @@ void Announcement::draw(int w, int h) const
     int x = (w - textWidth) / 2;
     int y = (h - FONTSIZE) / 2;
 
-    Text::draw(x, y);
+    engine::Text::draw(x, y);
 }

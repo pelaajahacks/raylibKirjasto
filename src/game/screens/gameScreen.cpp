@@ -87,7 +87,7 @@ void GameScreen::refreshEntities() {
         std::remove_if(
             entities.begin(),
             entities.end(),
-            [](const std::unique_ptr<Entity>& e) {
+            [](const std::unique_ptr<engine::Entity>& e) {
                 return !e->isAlive();
             }
         ),
@@ -144,7 +144,7 @@ void GameScreen::checkResetBind() {
 
 void GameScreen::reset() {
   entities.clear();
-  timer = std::make_unique<StartTimer>();
+  timer = std::make_unique<engine::StartTimer>();
   player = nullptr;
   init(w, h);
   resetReq = false;

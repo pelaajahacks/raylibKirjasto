@@ -16,7 +16,7 @@
 
 
 
-class GameScreen : public State {
+class GameScreen : public engine::State {
   public:
     GameScreen(int w, int h);
 
@@ -24,7 +24,7 @@ class GameScreen : public State {
     void draw() override;
 
     void updateWindowSizeForEntities(); 
-    void addEntity(std::unique_ptr<Entity> e);
+    void addEntity(std::unique_ptr<engine::Entity> e);
 
     void drawFPS();
     void drawTimer(std::string text);
@@ -54,8 +54,8 @@ class GameScreen : public State {
 
 
   private:
-    std::vector<std::unique_ptr<Entity>> entities;
-    std::unique_ptr<StartTimer> timer;
+    std::vector<std::unique_ptr<engine::Entity>> entities;
+    std::unique_ptr<engine::StartTimer> timer;
 
     Rocket* player = nullptr;
 

@@ -9,7 +9,7 @@ struct ResultStyle {
 
 
 
-class Announcement : public Text {
+class Announcement : public engine::Text {
 public:
     static constexpr float FONTSIZE = 128.0f;
 
@@ -19,7 +19,7 @@ public:
     void draw(int w, int h) const override;
 
     Announcement(bool landedSmoothly)
-        : Text(getStyle(landedSmoothly).text, getStyle(landedSmoothly).color, FONTSIZE)
+        : engine::Text(getStyle(landedSmoothly).text, getStyle(landedSmoothly).color, FONTSIZE)
     {}
 
 private:

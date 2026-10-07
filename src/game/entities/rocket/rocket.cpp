@@ -5,7 +5,7 @@
 
 Rocket::Rocket(std::string name, float x, float y, float w, float h,
                Texture2D* tex, Color color)
-    : Entity(name, x, y, w, h, tex, color),
+    : engine::Entity(name, x, y, w, h, tex, color),
       fuel(maxFuel) {
 } 
 
@@ -57,7 +57,7 @@ void Rocket::drawThrustVisual() {
 int Rocket::draw() {
   Vector2 pos = getPos();
   Vector2 size = getSize();
-  Entity::draw();
+  engine::Entity::draw();
   drawThrustVisual();
   fuelBar.draw(fuel, maxFuel);
   if(rocketLanded) { announcement->draw(w, h); }
@@ -143,8 +143,8 @@ void Rocket::onLand() {
 
 }
 
-void Rocket::onCollision(Entity& other) {
-    if (other.getType() == EntityType::Platform) {
+void Rocket::onCollision(engine::Entity& other) {
+    if (other.getType() == engine::EntityType::Platform) {
         if(!rocketLanded) {
           rocketLandedSmoothly = checkIfWinCondition();
           onLand();

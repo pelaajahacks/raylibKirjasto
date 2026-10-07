@@ -7,13 +7,13 @@
 #include <array>
 #include <memory>
 
-class Rocket : public Entity
+class Rocket : public engine::Entity
 {
 public:
     Rocket(std::string name, float x, float y, float w, float h,
            Texture2D* tex = nullptr, Color color = RED);
-    EntityType getType() const override {
-      return EntityType::Rocket;
+    engine::EntityType getType() const override {
+      return engine::EntityType::Rocket;
     }
     void fly(float dt);
     
@@ -28,7 +28,7 @@ public:
     int draw() override;
     void drawThrustVisual();
     void onResize(int newW, int newH) override;
-    void onCollision(Entity& other) override;
+    void onCollision(engine::Entity& other) override;
 
     bool checkIfWinCondition();
     bool playerWon() const override;
