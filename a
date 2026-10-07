@@ -1,0 +1,36 @@
+Memory Safety Report — libs/engine
+Static review of all sources/headers in the engine. No dynamic memory is allocated manually (std::string/std::map/std::unique_ptr only), so the findings are dominated by lifetime/ownership and re-entrancy issues rather than raw new/delete errors.
+High severity
+H1 — Use-after-free on state self-transition (stateMachine.cpp:10, gameManager.cpp:24)
+If a State calls changeState(...) from inside its own update(), draw(), or onResize(), then stateMachine.changeState() assigns currentState = std::move(state), destroying the currently-executing state object while its own member function is still on the call stack. Any member access after the nested call runs on freed memory. Same class of bug as the classic "delete this". Latent — the current consumer screen never calls changeState, but it's the engine's signature hazard.
+H2 — Dangling Entity::texture, no ownership model (entity.hpp:68, entity.cpp:69)
+Texture2D* texture is a non-owning raw pointer. Entity::draw() dereferences it unconditionally (when non-null). If the caller unloads the texture (via UnloadTexture/UnloadTextureFromVram or the engine's own textureManager) while an entity still holds it, the pointer dangles and DrawTextureRec(*texture, ...) reads freed GPU resources. The engine tracks nothing here — no refcount, no invalidation hook. The nullptr check guards "no texture", not "unloaded texture".
+H3 — Polymorphic base without virtual destructor (entity.hpp:17)
+Entity declares virtual functions (getType, draw, input, update, playerWon, onCollision) but no virtual ~Entity(). Deleting a derived type through Entity* (e.g. std::unique_ptr<Entity> holding a Rocket) is undefined behavior — base destructor runs without invoking the derived destructor; subobject destructors (strings) of the derived part are skipped.
+Medium severity
+M1 — Empty std::function / null state (state.hpp:21-22, gameManager.cpp:15-21)
+State::changeState/State::quit are empty until GameManager::changeState wires them and are never null-checked at the callsite. A state invoking changeState from its constructor yields std::bad_function_call (abort if uncaught). GameManager::changeState(nullptr) dereferences the null state pointer at gameManager.cpp:15.
+M2 — this capture in state lambdas (gameManager.cpp:15-20)
+Both lambdas capture GameManager*. Correctness depends on the manager outliving every state — currently true only by stack-ordering convention in main(). There is no safeguard, and a State's destructor or a leaked state calling the lambda after the manager is gone is a UAF.
+M3 — Audio device lifecycle unguarded (audioManager.cpp:10-24)
+init()/shutdown() track no device state; play()/stop() are forwarded with no IsAudioDeviceReady() check. Calling them before init() or after shutdown() operates on sounds whose audio buffers have been torn down with the device — buffer use-after-free territory.
+M4 — CloseWindow() unconditional (game.cpp:17-19)
+~Game() calls CloseWindow() even when InitWindow failed (a failure is only logged at game.cpp:13). CloseWindow on a never-created/twice-closed window performs OpenGL/context teardown on state that may not exist. Also Game::reset() is declared (game.hpp:16) but has no definition — a link error if any consumer calls it.
+Low severity / hygiene (currently dead code, but shipped in the public include dir)
+L1 — Xoroshiro: uninitialized state + UB return (xoroshiro128.hpp:8-11)
+seed() is a no-op, so uint64_t s[2] is never initialized; next() reads it and has {} as its body, i.e. falls off the end of a value-returning function — both are undefined behavior (uninitialized-memory read) if any consumer uses it. Header is currently never included.
+L2 — random.hpp does not compile (random.hpp:5-6)
+void init() is missing both a body and a semicolon (namespace Engine::Random { void init() }). Also uses Engine:: namespace while the rest of the library uses engine::.
+L3 — textureManager is unimplemented and has ODR problems (textureManager.hpp)
+No .cpp exists → any use fails to link. And the design as declared is unsound even if implemented: methods are const yet mutate the std::map member; getTexture() returns a pointer into a map node that delTexture() can erase (dangling by design); storing Texture2D by value lets the same GPU id live in multiple entries with no refcount → double-unload hazard.
+L4 — Parameter-name mismatch (nametag.hpp:13 vs nametag.cpp:15)
+draw(x, y, entityHeight, entityWidth) in the header vs (x, y, entityWidth, entityHeight) in the definition. Types match so it compiles and works (caller passes width,height), but the header misnames the parameters.
+Not issues
+- AudioManager singleton (audioManager.cpp:5-8) is a clean Meyers singleton, copy-deleted, default dtor — however it does not call CloseAudioDevice(), so forgetting shutdown() leaks the device resources.
+- StateMachine, GameManager, Text, Nametag, StartTimer, Entity use RAII types only; no leaks detected.
+- Entity default copy is safe (only a non-owning raw pointer + strings).
+Suggested verification
+Static review only so far. To confirm H1/H2/H3 empirically, build with -fsanitize=address,undefined (with the -fno-omit-frame-pointer) and exercise state changes and entity texture swaps. Valgrind would also flag the Xoroshiro uninitialized reads once that header is wired in.
+I can turn any of these into a concrete remediation plan (e.g. deferred state-swap for H1, shared_ptr/refcount or owned-texture contract for H2, virtual ~Entity() for H3) — just say which priorities you want.
+
+opencode -s ses_eeaf97001ffeSPqhrD53jUU01U

@@ -4,9 +4,3 @@
 [submodule "layout"]
 	path = libs/ui/external/layout
 	url = https://github.com/randrew/layout
-[submodule "libs/ui/external/raygui"]
-	path = libs/ui/external/raygui
-	url = https://github.com/raysan5/raygui.git
-[submodule "libs/ui/external/layout"]
-	path = libs/ui/external/layout
-	url = https://github.com/randrew/layout
