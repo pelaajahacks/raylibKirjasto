@@ -4,3 +4,9 @@
 [submodule "layout"]
 	path = libs/ui/external/layout
 	url = https://github.com/randrew/layout
+[submodule "libs/engine"]
+	path = libs/engine
+	url = git@github.com:pelaajahacks/raylibEngine.git
+[submodule "libs/ui"]
+	path = libs/ui
+	url = git@github.com:pelaajahacks/raylibUI.git
