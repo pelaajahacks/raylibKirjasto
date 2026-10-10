@@ -4,3 +4,6 @@
 [submodule "libs/engine"]
 	path = libs/engine
 	url = git@github.com:pelaajahacks/raylibEngine.git
+[submodule "libs/random"]
+	path = libs/random
+	url = git@github.com:pelaajahacks/simplecpprandom.git

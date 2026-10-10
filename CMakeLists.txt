@@ -9,6 +9,7 @@ find_package(raylib CONFIG REQUIRED)
 
 add_subdirectory(libs/ui)
 add_subdirectory(libs/engine)
+add_subdirectory(libs/random)
 
 file(GLOB_RECURSE SOURCES
     "src/*.cpp"
@@ -24,4 +25,5 @@ target_link_libraries(kirjasto PRIVATE
     raylib
     ui
     engine
+    random
 )

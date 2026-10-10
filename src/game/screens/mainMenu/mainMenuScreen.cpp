@@ -4,6 +4,7 @@
 #include "ui/VBox.hpp"
 #include "engine/core/manager/gameManager.hpp"
 
+
 namespace game {
 
 void MainMenuScreen::init(int w, int h) {
@@ -15,6 +16,10 @@ void MainMenuScreen::init(int w, int h) {
   btn->setOnClick([this]() { uiDirty = true; });
   testPanel->add(std::move(button));
   canvas.add(std::move(testPanel));
+
+  
+  random.seed(123);
+
 
   onResize(w, h);
 }
@@ -30,6 +35,7 @@ void MainMenuScreen::update(float dt) {
 
   if (uiDirty) {
     uiDirty = false;
+    buttonText = std::to_string(engine::rng::randint(random, 1, 6));
     btn->setText(buttonText);
     layout.calculate(canvas);
   }

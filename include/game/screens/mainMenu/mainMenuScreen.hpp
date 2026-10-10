@@ -5,6 +5,7 @@
 #include "ui/Panel.hpp"
 #include "ui/Button.hpp"
 #include "ui/Layout.hpp"
+#include "engine/utils/random.hpp"
 
 #include <string>
 
@@ -41,8 +42,10 @@ class MainMenuScreen : public engine::State {
     ScreenStyle style;
 
     bool uiDirty = false;
-    std::string buttonText = "Testing";
+    std::string buttonText = "Testing how does it know the width";
     ui::Button* btn = nullptr;
+
+    engine::rng::Xoroshiro128pp random;
 
     int w, h;
 };
